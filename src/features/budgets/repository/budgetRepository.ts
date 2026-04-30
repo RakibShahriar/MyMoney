@@ -1,5 +1,6 @@
 import type * as SQLite from 'expo-sqlite';
 
+import { ALL_EXPENSES_CATEGORY_ID } from '@/src/constants/categories';
 import { getDatabase } from '@/src/db/database';
 import { budgetQueries } from '@/src/db/queries/budgetQueries';
 import type { Budget, BudgetInput, BudgetProgress } from '@/src/types/budget';
@@ -35,10 +36,12 @@ const mapBudgetProgress = (row: Record<string, unknown>): BudgetProgress => {
 export const budgetRepository = {
   async listByMonth(month: number, year: number, database?: SQLite.SQLiteDatabase) {
     const db = await resolveDb(database);
-    const rows = ((await db.getAllAsync(budgetQueries.list, [month, year])) as Record<
-      string,
-      unknown
-    >[]) ?? [];
+    const rows = ((await db.getAllAsync(budgetQueries.list, [
+      ALL_EXPENSES_CATEGORY_ID,
+      month,
+      year,
+      ALL_EXPENSES_CATEGORY_ID,
+    ])) as Record<string, unknown>[]) ?? [];
     return rows.map(mapBudgetProgress);
   },
 

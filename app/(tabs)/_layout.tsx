@@ -1,26 +1,32 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import { Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useAppTheme } from '@/src/hooks/useAppTheme';
 
 export default function TabLayout() {
   const theme = useAppTheme();
+  const insets = useSafeAreaInsets();
+  const bottomInset = Math.max(insets.bottom, 10);
+  const androidLift = Platform.OS === 'android' ? 6 : 0;
 
   return (
     <Tabs
       initialRouteName="dashboard"
       screenOptions={{
-        tabBarPosition: 'top',
+        tabBarPosition: 'bottom',
         tabBarActiveTintColor: theme.colors.primary,
         tabBarInactiveTintColor: theme.colors.tabInactive,
         tabBarStyle: {
           backgroundColor: theme.colors.surface,
-          borderBottomColor: theme.colors.border,
-          borderTopColor: 'transparent',
-          height: 84,
-          paddingBottom: 12,
-          paddingTop: 28,
+          borderBottomColor: 'transparent',
+          borderTopColor: theme.colors.border,
+          height: 66 + bottomInset,
+          paddingBottom: bottomInset,
+          paddingTop: 8,
+          marginBottom: androidLift,
         },
         tabBarLabelStyle: {
           fontSize: 12,

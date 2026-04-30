@@ -1,5 +1,15 @@
 import type { DefaultCategorySeed } from '@/src/types/category';
 
+export const ALL_EXPENSES_CATEGORY_ID = 'budget-all-expenses';
+
+export const allExpensesBudgetCategory: DefaultCategorySeed & { id: string } = {
+  id: ALL_EXPENSES_CATEGORY_ID,
+  name: 'All Expenses',
+  type: 'expense',
+  icon: 'layers-outline',
+  color: '#147D80',
+};
+
 export const defaultCategories: DefaultCategorySeed[] = [
   { name: 'Salary', type: 'income', icon: 'briefcase-outline', color: '#23967F' },
   { name: 'Freelance', type: 'income', icon: 'laptop-outline', color: '#147D80' },

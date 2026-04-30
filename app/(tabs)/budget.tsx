@@ -31,6 +31,7 @@ export default function BudgetScreen() {
 
   return (
     <ScreenContainer
+      swipeNavigation={{ previousHref: '/(tabs)/transactions', nextHref: '/(tabs)/accounts' }}
       header={
         <>
           <SectionHeader title="Budgets" subtitle="Track monthly category caps" actionLabel="Create" onActionPress={() => router.push('/create-budget')} />

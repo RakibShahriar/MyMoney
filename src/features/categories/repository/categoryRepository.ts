@@ -2,6 +2,7 @@ import type * as SQLite from 'expo-sqlite';
 
 import { getDatabase } from '@/src/db/database';
 import { categoryQueries } from '@/src/db/queries/categoryQueries';
+import { ALL_EXPENSES_CATEGORY_ID } from '@/src/constants/categories';
 import type { Category, CategoryInput } from '@/src/types/category';
 import type { TransactionType } from '@/src/types/common';
 
@@ -22,7 +23,9 @@ export const categoryRepository = {
     const db = await resolveDb(database);
     const sql = type ? categoryQueries.byType : categoryQueries.list;
     const rows = (
-      type ? await db.getAllAsync(sql, [type]) : await db.getAllAsync(sql)
+      type
+        ? await db.getAllAsync(sql, [type, ALL_EXPENSES_CATEGORY_ID])
+        : await db.getAllAsync(sql, [ALL_EXPENSES_CATEGORY_ID])
     ) as Record<string, unknown>[];
     return rows.map(mapCategory);
   },

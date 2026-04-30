@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Alert, StyleSheet, Text, View } from 'react-native';
 
 import { ChipSelector } from '@/src/components/common/ChipSelector';
+import { DateField } from '@/src/components/common/DateField';
 import { PrimaryButton } from '@/src/components/common/PrimaryButton';
 import { TextField } from '@/src/components/common/TextField';
 import { useAppTheme } from '@/src/hooks/useAppTheme';
@@ -99,12 +100,11 @@ export const TransactionForm = ({
         </Text>
       ) : null}
       <TextField label="Amount" value={amount} onChangeText={setAmount} keyboardType="decimal-pad" placeholder="0.00" />
-      <TextField
+      <DateField
         label="Date"
         value={transactionDate}
-        onChangeText={setTransactionDate}
-        placeholder="YYYY-MM-DD"
-        hint="Keep dates in YYYY-MM-DD format"
+        onChange={setTransactionDate}
+        hint="Tap to choose the transaction date"
       />
       <TextField
         label="Note"

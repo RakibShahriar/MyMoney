@@ -21,6 +21,7 @@ export default function AccountsScreen() {
 
   return (
     <ScreenContainer
+      swipeNavigation={{ previousHref: '/(tabs)/budget', nextHref: '/(tabs)/settings' }}
       header={
         <SectionHeader
           title="Accounts"

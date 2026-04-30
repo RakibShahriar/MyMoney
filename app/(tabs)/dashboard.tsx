@@ -33,6 +33,7 @@ export default function DashboardScreen() {
 
   return (
     <ScreenContainer
+      swipeNavigation={{ nextHref: '/(tabs)/transactions' }}
       header={
         <>
           <SectionHeader title="MyMoney" subtitle="Offline-first overview for your selected month" />

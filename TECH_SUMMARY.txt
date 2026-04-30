@@ -1,0 +1,265 @@
+MyMoney Technical Summary
+
+Product Overview
+
+MyMoney is an offline-first personal finance app built with Expo and React Native.
+It lets users manage accounts, transactions, budgets, categories, settings, and analytics.
+The app stores data locally in SQLite, uses Expo Router for navigation, and Zustand for lightweight app state.
+
+How The App Starts
+
+The app boots through:
+app/_layout.tsx
+
+This file:
+- shows the startup/loading state
+- runs the bootstrap hook
+- applies the navigation theme
+- defines the root stack routes
+
+Bootstrap logic lives in:
+src/hooks/useBootstrap.ts
+
+This hook:
+- initializes the SQLite database
+- loads persisted settings
+- updates theme and currency values in the app store
+
+Database initialization lives in:
+src/db/migrations/init.ts
+
+It:
+- creates all database tables
+- seeds default categories
+- seeds default settings
+- creates a default account
+- ensures the hidden built-in "All Expenses" budget category exists
+
+Low-level database access lives in:
+src/db/database.ts
+
+Navigation
+
+Main tab navigation lives in:
+app/(tabs)/_layout.tsx
+
+Tabs:
+- Dashboard: app/(tabs)/dashboard.tsx
+- Transactions: app/(tabs)/transactions.tsx
+- Budget: app/(tabs)/budget.tsx
+- Accounts: app/(tabs)/accounts.tsx
+- Settings: app/(tabs)/settings.tsx
+
+Modal/detail screens:
+- Add transaction: app/add-transaction.tsx
+- Edit transaction: app/edit-transaction.tsx
+- Create/Edit budget: app/create-budget.tsx
+- Manage categories: app/manage-categories.tsx
+- Account details: app/account-details.tsx
+
+Architecture Pattern
+
+Most features follow this flow:
+
+screen -> hook -> service -> repository -> db query/schema
+
+Meaning:
+- screens render UI and call hooks
+- hooks load data and manage loading/error/refresh behavior
+- services contain business rules and validation
+- repositories run SQLite reads and writes
+- query files hold SQL
+- schema files define tables
+
+Global State
+
+Main app store:
+src/store/appStore.ts
+
+Used for:
+- selected month/year
+- theme mode
+- currency settings
+- dataVersion refresh trigger
+
+Other small stores:
+- account filter: src/store/accountStore.ts
+- transaction filters: src/store/transactionStore.ts
+
+Feature Map
+
+Transactions
+
+Main files:
+- screen list/filter UI: app/(tabs)/transactions.tsx
+- create screen: app/add-transaction.tsx
+- edit/delete screen: app/edit-transaction.tsx
+- form UI: src/components/forms/TransactionForm.tsx
+- hook: src/features/transactions/hooks/useTransactions.ts
+- details hook: src/features/transactions/hooks/useTransactionDetails.ts
+- service: src/features/transactions/services/transactionService.ts
+- repository: src/features/transactions/repository/transactionRepository.ts
+- SQL: src/db/queries/transactionQueries.ts
+
+Important behavior:
+- saving or deleting a transaction also updates the related account balance in the service layer
+
+Budgets
+
+Main files:
+- budget tab: app/(tabs)/budget.tsx
+- create/edit/delete screen: app/create-budget.tsx
+- form UI: src/components/forms/BudgetForm.tsx
+- hook: src/features/budgets/hooks/useBudgets.ts
+- details hook: src/features/budgets/hooks/useBudgetDetails.ts
+- service: src/features/budgets/services/budgetService.ts
+- repository: src/features/budgets/repository/budgetRepository.ts
+- SQL: src/db/queries/budgetQueries.ts
+
+Important behavior:
+- budgets are unique by category + month + year
+- the app supports a built-in special budget category called "All Expenses"
+- the special category is defined in src/constants/categories.ts
+- normal category lists hide that built-in row, but the budget system can still use it
+- budget edit mode includes a delete action
+
+Accounts
+
+Main files:
+- accounts tab: app/(tabs)/accounts.tsx
+- details screen: app/account-details.tsx
+- form UI: src/components/forms/AccountForm.tsx
+- hooks: src/features/accounts/hooks/useAccounts.ts and src/features/accounts/hooks/useAccountDetails.ts
+- service: src/features/accounts/services/accountService.ts
+- repository: src/features/accounts/repository/accountRepository.ts
+- SQL: src/db/queries/accountQueries.ts
+
+Categories
+
+Main files:
+- management screen: app/manage-categories.tsx
+- hook: src/features/categories/hooks/useCategories.ts
+- service: src/features/categories/services/categoryService.ts
+- repository: src/features/categories/repository/categoryRepository.ts
+- SQL: src/db/queries/categoryQueries.ts
+
+Important behavior:
+- categories cannot be deleted if they are already used by transactions or budgets
+
+Settings
+
+Main files:
+- settings screen: app/(tabs)/settings.tsx
+- hook: src/features/settings/hooks/useSettings.ts
+- service: src/features/settings/services/settingsService.ts
+- repository: src/features/settings/repository/settingsRepository.ts
+
+Analytics / Dashboard
+
+Main files:
+- dashboard screen: app/(tabs)/dashboard.tsx
+- hook: src/features/analytics/hooks/useDashboard.ts
+- service: src/features/analytics/services/analyticsService.ts
+- repository: src/features/analytics/repository/analyticsRepository.ts
+- SQL: src/db/queries/analyticsQueries.ts
+
+Shared UI Components
+
+Common layout and keyboard-aware scrolling:
+- src/components/common/ScreenContainer.tsx
+
+Reusable text input:
+- src/components/common/TextField.tsx
+
+Other shared UI:
+- primary button: src/components/common/PrimaryButton.tsx
+- chip selector: src/components/common/ChipSelector.tsx
+- date field: src/components/common/DateField.tsx
+- empty state: src/components/common/EmptyState.tsx
+- section header: src/components/common/SectionHeader.tsx
+- transaction card: src/components/cards/TransactionCard.tsx
+- budget card: src/components/cards/BudgetCard.tsx
+- account card: src/components/cards/AccountCard.tsx
+- charts:
+  - src/components/charts/ExpensePieChart.tsx
+  - src/components/charts/CashFlowChart.tsx
+  - src/components/charts/AccountBarChart.tsx
+
+Validation, Types, Constants, Utilities
+
+Validation:
+- src/utils/validation.ts
+
+Core types:
+- src/types/account.ts
+- src/types/transaction.ts
+- src/types/budget.ts
+- src/types/category.ts
+- src/types/common.ts
+
+Theme:
+- src/theme/index.ts
+- src/hooks/useAppTheme.ts
+
+Utilities:
+- currency formatting: src/utils/currency.ts
+- dates/month helpers: src/utils/date.ts
+- math helpers: src/utils/math.ts
+- id generation: src/utils/id.ts
+
+Database Structure
+
+Schema files:
+- src/db/schema/accounts.ts
+- src/db/schema/categories.ts
+- src/db/schema/transactions.ts
+- src/db/schema/budgets.ts
+- src/db/schema/settings.ts
+
+Database tables:
+- accounts
+- categories
+- transactions
+- budgets
+- settings
+
+Mental Model For New Developers
+
+If you need to change:
+- navigation or screen registration: start in app/
+- screen data loading: check the feature hook
+- business logic: check the feature service
+- database reads/writes: check the feature repository and db query files
+- shared UI/keyboard/layout behavior: check src/components/common/
+- month/theme/currency/filter state: check src/store/
+
+Quick File Routing Guide
+
+If a user reports:
+- transaction save issue -> transaction form, useTransactions, transactionService, transactionRepository
+- balance mismatch -> transactionService and accountRepository
+- budget amount/progress issue -> useBudgets, budgetService, budgetRepository, budgetQueries
+- category list issue -> useCategories, categoryService, categoryRepository
+- dashboard chart mismatch -> useDashboard, analyticsService, analyticsRepository
+- theme or currency issue -> settings files, useBootstrap, appStore, theme files
+- keyboard covering inputs -> ScreenContainer and TextField
+
+Deployment Notes
+
+Current project setup already includes:
+- Expo Router entry point
+- static web output in app.json
+- EAS build profiles in eas.json for preview and production Android builds
+
+Useful config files:
+- app.json
+- eas.json
+- package.json
+
+Summary
+
+This app is organized cleanly around feature slices.
+Most day-to-day work should start by identifying the feature, then following the flow:
+screen -> hook -> service -> repository -> query/schema
+
+That pattern is the main key to understanding and extending the codebase safely.

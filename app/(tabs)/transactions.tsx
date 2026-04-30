@@ -44,6 +44,7 @@ export default function TransactionsScreen() {
 
   return (
     <ScreenContainer
+      swipeNavigation={{ previousHref: '/(tabs)/dashboard', nextHref: '/(tabs)/budget' }}
       header={
         <>
           <SectionHeader

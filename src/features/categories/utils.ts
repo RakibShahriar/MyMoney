@@ -7,3 +7,24 @@ export const categoryColorPresets = [
   '#8D6FDB',
   '#C86B98',
 ];
+
+export const categoryIconPresets = [
+  'restaurant-outline',
+  'car-outline',
+  'bag-handle-outline',
+  'receipt-outline',
+  'medkit-outline',
+  'film-outline',
+  'home-outline',
+  'school-outline',
+  'airplane-outline',
+  'gift-outline',
+  'briefcase-outline',
+  'cash-outline',
+  'card-outline',
+  'laptop-outline',
+  'trending-up-outline',
+  'sparkles-outline',
+  'wallet-outline',
+  'pricetag-outline',
+];

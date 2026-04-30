@@ -1,4 +1,4 @@
-import { defaultCategories } from '@/src/constants/categories';
+import { ALL_EXPENSES_CATEGORY_ID, allExpensesBudgetCategory, defaultCategories } from '@/src/constants/categories';
 import { defaultCurrency } from '@/src/constants/currency';
 import { DEFAULT_ACCOUNT_ICON, DEFAULT_ACCOUNT_NAME } from '@/src/constants/app';
 import { getDatabase } from '@/src/db/database';
@@ -48,6 +48,30 @@ export const initializeDatabase = async () => {
         ]
       );
     }
+  }
+
+  const allExpensesCategory = await db.getFirstAsync<{ id: string }>(
+    'SELECT id FROM categories WHERE id = ?;',
+    [ALL_EXPENSES_CATEGORY_ID]
+  );
+
+  if (!allExpensesCategory) {
+    const timestamp = new Date().toISOString();
+    await db.runAsync(
+      `
+        INSERT INTO categories (id, name, type, icon, color, created_at, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?);
+      `,
+      [
+        allExpensesBudgetCategory.id,
+        allExpensesBudgetCategory.name,
+        allExpensesBudgetCategory.type,
+        allExpensesBudgetCategory.icon,
+        allExpensesBudgetCategory.color,
+        timestamp,
+        timestamp,
+      ]
+    );
   }
 
   const settingsRow = await db.getFirstAsync<{ count: number }>('SELECT COUNT(*) as count FROM settings;');

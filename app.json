@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "mymoney-app",
+    "name": "MyMoney",
     "slug": "mymoney-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/MyMoney_icon.png",
     "scheme": "mymoneyapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -12,10 +12,11 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.mymoney",
+      "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
+        "backgroundImage": "./assets/images/Background_icon.png",
+        "foregroundImage": "./assets/images/MyMoney_icon.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
@@ -30,7 +31,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/Background_icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
@@ -44,6 +45,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "5cd4c7be-8ae0-40ae-9576-50a68c4b324c"
+      }
+    },
+    "owner": "rakibshahriar"
   }
 }
