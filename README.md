@@ -1,50 +1,44 @@
-# Welcome to your Expo app 👋
+MyMoney App Documentation
+You can find the App in playstore. https://play.google.com/store/apps/details?id=com.goldenliningsolution.mymoney
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Quick summary:
+- Offline-first personal finance app built with Expo + React Native
+- Tracks buy/sell records, budgets, accounts, and monthly analytics
+- Uses SQLite for local storage and Zustand for app state
 
-## Get started
+# MyMoney App Documentation
 
-1. Install dependencies
+MyMoney is an offline-first personal finance app built with Expo and React Native.
+It helps users track buy and sell records, manage budgets, monitor account balances, and review spending analytics.
 
-   ```bash
-   npm install
-   ```
+## Table of Contents
 
-2. Start the app
+1. Core Features
+2. Tech Stack
+3. Project Structure
+4. Architecture
+5. App Flow and Screens
+6. Setup and Run
+7. Build and Release
+8. Data and Storage
+9. Developer Notes
 
-   ```bash
-   npx expo start
-   ```
+## Core Features
 
-In the output, you'll find options to open the app in a
+- Offline-first finance tracking (no internet needed for normal usage)
+- Buy and sell transaction management with filters and search
+- Monthly budgeting by category, including an All Expenses budgeting option
+- Multiple account management (wallet, bank, cards, etc.)
+- Analytics dashboard with expense pie, cash flow, and account charts
+- Local settings for currency, decimal precision, and theme mode
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Tech Stack
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Frontend: React Native + Expo
+- Language: TypeScript
+- Navigation: Expo Router
+- Database: Expo SQLite
+- State Management: Zustand
+- Forms: React Hook Form
+- Validation: Zod
+- Charts: react-native-svg based chart components
